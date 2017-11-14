@@ -90,14 +90,16 @@ set hlsearch incsearch
 set nowrap
 
 " If line wrapping is enabled, however, set up line breaks at word boundaries,
-" and indent the broken line
-set linebreak breakindent breakindentopt=shift:4
+" and indent the broken line (if breakindent is supported)
+set linebreak
+silent! set breakindent breakindentopt=shift:4
 
 " Set tab behavior to always use/expect 4 spaces
 set tabstop=4 shiftwidth=4 smarttab expandtab autoindent
 
-" Set CTRL-A and CTRL-X to only work on decimal, binary, and hex numbers
-set nrformats=bin,hex
+" Set CTRL-A and CTRL-X to only work on decimal, hex, and binary (if supported) numbers
+set nrformats=hex
+silent! set nrformats+=bin
 
 " Set key timeout length to 700 milliseconds
 set timeoutlen=700
