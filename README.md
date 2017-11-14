@@ -17,3 +17,7 @@ This repository is a self-contained package of all my dotfiles.
 
 Create ~/\_vsvimrc with the following contents:
 `source /path/to/init_vs.vim`
+
+## tmux Installation
+
+In the home directory: `ln -s /path/to/tmux/.tmux.conf`
