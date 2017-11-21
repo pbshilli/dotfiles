@@ -23,6 +23,7 @@ Plug 'thinca/vim-fontzoom'
 Plug 'mhinz/vim-grepper'
 
 " Syntax highlighting
+Plug 'kergoth/vim-bitbake'
 if has('win32')
     Plug 'm42e/trace32-practice.vim'
 endif
