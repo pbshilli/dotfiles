@@ -5,6 +5,11 @@ dotfiles
 
 This repository is a self-contained package of all my dotfiles.
 
+## Git Installation
+
+1. Verify all settings in `git/git_setup_global.sh` are correct/desired
+1. Run `git/git_setup_global.sh`
+
 ## Vim Installation
 
 1. [Install vim-plug](https://github.com/junegunn/vim-plug)
