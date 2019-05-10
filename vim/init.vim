@@ -170,8 +170,9 @@ nnoremap <leader>/ :Grepper-buffer -noswitch -cword<CR>
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
-" By default, disable gutentags by removing all project root detection.  To
-" enable, set g:gutentags_project_root to a unique file at the project root
+" By default, disable gutentags and remove all project root detection since it
+" doesn't play nicely with submodules
+let g:gutentags_enabled = 0
 let g:gutentags_add_default_project_roots = 0
 let g:gutentags_add_ctrlp_root_markers = 0
 
@@ -207,3 +208,21 @@ autocmd FileType python nnoremap <leader>r :LspReferences<cr>
 " Remap some things for omnicomplete goodness
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-x><C-o>
+
+function SetupPrjPath()
+    if exists('g:prj_path')
+        if has('win32')
+            let file_list_command = 'dir ' . g:prj_path . ' /-n /b /s /a-d'
+        else
+            let file_list_command = 'find ' . g:prj_path . ' -type f'
+        endif
+        let g:grepper.grep.grepprg = 'grep -EInr $* ' . g:prj_path
+        let g:ctrlp_user_command = l:file_list_command
+        if len(g:gutentags_project_root) > 0
+            let g:gutentags_file_list_command = l:file_list_command
+            let g:gutentags_enabled = 1
+            GutentagsUpdate!
+        endif
+    endif
+endfunction
+autocmd SessionLoadPost * call SetupPrjPath()
