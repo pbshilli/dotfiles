@@ -209,17 +209,17 @@ autocmd FileType python nnoremap <leader>r :LspReferences<cr>
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-x><C-o>
 
+" If a session is loaded and specifies g:prj_path, set up
+" grepper and gutentags accordingly
 function SetupPrjPath()
     if exists('g:prj_path')
-        if has('win32')
-            let file_list_command = 'dir ' . g:prj_path . ' /-n /b /s /a-d'
-        else
-            let file_list_command = 'find ' . g:prj_path . ' -type f'
-        endif
         let g:grepper.grep.grepprg = 'grep -EInr $* ' . g:prj_path
-        let g:ctrlp_user_command = l:file_list_command
         if len(g:gutentags_project_root) > 0
-            let g:gutentags_file_list_command = l:file_list_command
+            if has('win32')
+                let g:gutentags_file_list_command = 'dir ' . g:prj_path . ' /-n /b /s /a-d'
+            else
+                let g:gutentags_file_list_command = 'find ' . g:prj_path . ' -type f'
+            endif
             let g:gutentags_enabled = 1
             GutentagsUpdate!
         endif
