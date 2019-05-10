@@ -16,6 +16,9 @@ Plug 'romainl/Apprentice'
 " File explorer
 Plug 'scrooloose/nerdtree'
 
+" CTAGS utility
+Plug 'ludovicchabant/vim-gutentags'
+
 " GVIM font zooming
 Plug 'thinca/vim-fontzoom'
 
@@ -148,17 +151,16 @@ nnoremap <leader>8 "*p
 vnoremap <leader>8 "*p
 inoremap <C-v> <C-R>*
 
-" Set whitespace characters and key mapping
+" Set whitespace characters
 set listchars=tab:»·,trail:·,eol:$
-noremap <F11> :set list!<CR>
 
 " Grepper
-set grepprg=grep\ -ErInH\ --exclude=tags
+set grepprg=grep\ -ErInH
 
 let g:grepper = {
     \ 'tools': ['grep'],
     \ 'grep': {
-    \   'grepprg':    'grep -EInr --exclude=tags',
+    \   'grepprg':    'grep -EInr',
     \   'grepprgbuf': 'grep -EInH $* $+',
     \   'grepformat': '%f:%l:%m' }}
 
@@ -167,6 +169,11 @@ nnoremap <leader>/ :Grepper-buffer -noswitch -cword<CR>
 
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
+
+" By default, disable gutentags by removing all project root detection.  To
+" enable, set g:gutentags_project_root to a unique file at the project root
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_add_ctrlp_root_markers = 0
 
 " Ctrl-P
 let g:ctrlp_map = '<leader>p'
@@ -200,5 +207,3 @@ autocmd FileType python nnoremap <leader>r :LspReferences<cr>
 " Remap some things for omnicomplete goodness
 inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-x><C-o>
-inoremap <C-j> <C-n>
-inoremap <C-k> <C-p>
