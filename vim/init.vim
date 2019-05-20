@@ -14,7 +14,7 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'romainl/Apprentice'
 
 " File explorer
-Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-vinegar'
 
 " CTAGS utility
 Plug 'ludovicchabant/vim-gutentags'
@@ -184,11 +184,6 @@ let g:ctrlp_working_path_mode = '0'
 
 " Don't limit Ctrl-P files
 let g:ctrlp_max_files = 0
-
-" NERDTree
-noremap <leader>nt :NERDTreeToggle<CR>
-noremap <leader>nf :NERDTreeFind<CR>
-let g:NERDTreeIgnore = ['\.pyc$']
 
 " Language Server
 if executable('pyls')
