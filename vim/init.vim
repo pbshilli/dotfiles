@@ -15,6 +15,7 @@ Plug 'romainl/Apprentice'
 
 " File explorer
 Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-dispatch'
 
 " CTAGS utility
 Plug 'ludovicchabant/vim-gutentags'
