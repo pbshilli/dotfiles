@@ -78,11 +78,17 @@ set laststatus=2
 " Make the current line and relative numbers visible
 set number relativenumber
 
+" When scrolling, always show 5 lines of context
+set scrolloff=5
+
 " Make cursor position and partial commmands visible
 set ruler showcmd
 
 " Set highlighted, incremental search
 set hlsearch incsearch
+
+" Show all possible matches while using tab completion
+set wildmode=list:full
 
 " Disable word line wrapping
 set nowrap
