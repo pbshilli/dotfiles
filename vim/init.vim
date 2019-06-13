@@ -1,5 +1,8 @@
 set nocompatible
 
+" Disable regular modelines in favor of secure modelines
+set nomodeline
+
 " Load plugins
 call plug#begin("~/vimfiles/plugged")
 
@@ -31,6 +34,9 @@ Plug 'kergoth/vim-bitbake'
 if has('win32')
     Plug 'm42e/trace32-practice.vim'
 endif
+
+" Secure modelines
+Plug 'ciaranm/securemodelines'
 
 call plug#end()
 
