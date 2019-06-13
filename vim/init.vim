@@ -63,14 +63,7 @@ endif
 
 " Set up Vim for all 256-color terminals
 if $TERM =~ "-256color"
-    let &t_AB="\e[48;5;%dm"
-    let &t_AF="\e[38;5;%dm"
     colorscheme apprentice
-endif
-
-" Fix the background in tmux and GNU screen
-if $TERM=="screen-256color"
-    set t_ut=
 endif
 
 " Enable syntax highlighting
