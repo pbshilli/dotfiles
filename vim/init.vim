@@ -140,6 +140,9 @@ noremap <C-l> <C-w>l
 " Make Y work like C and D
 nnoremap Y y$
 
+" Use <leader>r to force-redraw the screen
+nnoremap <silent> <leader>r :redraw!<CR>
+
 " Use <leader>bd to delete a buffer without closing the
 " window
 nnoremap <silent> <leader>bd :bp\|bd #<CR>
