@@ -23,9 +23,6 @@ Plug 'tpope/vim-dispatch'
 " CTAGS utility
 Plug 'ludovicchabant/vim-gutentags'
 
-" GVIM font zooming
-Plug 'thinca/vim-fontzoom'
-
 " Grep utility
 Plug 'mhinz/vim-grepper'
 
