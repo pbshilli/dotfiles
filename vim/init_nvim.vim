@@ -2,16 +2,26 @@
 set nomodeline
 
 " Load plugins
-call plug#begin("~/AppData/Local/nvim/plugged")
+if has("win32")
+    call plug#begin("~/AppData/Local/nvim/plugged")
+    
+    " Language server
+    Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': 'powershell -File install.ps1',
+        \ }
+else
+    call plug#begin("~/.config/nvim/plugged")
+
+    " Language server
+    Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': 'bash install.sh',
+        \ }
+endif
 
 " Fuzzy file search
 Plug 'kien/ctrlp.vim'
-
-" Language server
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'powershell -File install.ps1',
-    \ }
 
 " Color schemes
 Plug 'romainl/Apprentice'
@@ -126,9 +136,15 @@ let g:ctrlp_working_path_mode = '0'
 let g:ctrlp_max_files = 0
 
 " Language Server
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['py', '-3', '-m', 'pyls'],
-    \ }
+if has("win32")
+    let g:LanguageClient_serverCommands = {
+        \ 'python': ['py', '-3', '-m', 'pyls'],
+        \ }
+else
+    let g:LanguageClient_serverCommands = {
+        \ 'python': ['python3', '-m', 'pyls'],
+        \ }
+endif
 
 autocmd FileType python nnoremap gd :call LanguageClient#textDocument_definition()<cr>
 autocmd FileType python nnoremap K :call LanguageClient#textDocument_hover()<cr>
