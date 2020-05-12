@@ -146,8 +146,17 @@ else
         \ }
 endif
 
-autocmd FileType python nnoremap gd :call LanguageClient#textDocument_definition()<cr>
-autocmd FileType python nnoremap K :call LanguageClient#textDocument_hover()<cr>
+" Turn off live syntax warning/error reporting
+let g:LanguageClient_diagnosticsEnable = 0
+
+" Enable the language client for all supported filetypes
+function LC_maps()
+    if has_key(g:LanguageClient_serverCommands, &filetype)
+        nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
+        nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+    endif
+endfunction
+autocmd FileType * call LC_maps()
 
 " Remap some things for omnicomplete goodness
 inoremap <C-Space> <C-x><C-o>
