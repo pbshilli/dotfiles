@@ -49,6 +49,9 @@ colorscheme apprentice
 " File autocommands
 filetype plugin on 
 
+" Enable mouse support
+set mouse=a
+
 " Make the current line and relative numbers visible
 set number relativenumber
 "
