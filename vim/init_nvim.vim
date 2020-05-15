@@ -33,9 +33,6 @@ Plug 'tpope/vim-dispatch'
 " CTAGS utility
 Plug 'ludovicchabant/vim-gutentags'
 
-" Grep utility
-Plug 'mhinz/vim-grepper'
-
 " Syntax highlighting
 Plug 'kergoth/vim-bitbake'
 
@@ -110,18 +107,11 @@ vnoremap <leader>w <C-C>:update<CR>
 " Set whitespace characters
 set listchars=tab:»·,trail:·,eol:$
 
-" Grepper
+" grep
 set grepprg=grep\ -ErInH
 
-let g:grepper = {
-    \ 'tools': ['grep'],
-    \ 'grep': {
-    \   'grepprg':    'grep -EInr',
-    \   'grepprgbuf': 'grep -EInH $* $+',
-    \   'grepformat': '%f:%l:%m' }}
-
-nnoremap <leader>f :Grepper -noswitch -cword<CR>
-nnoremap <leader>/ :Grepper-buffer -noswitch -cword<CR>
+let g:prj_path = ''
+nnoremap <leader>f :sil :gr! "\b<C-R>=expand("<cword>")<CR>\b" <C-R>=g:prj_path<CR> \| copen<C-B><C-Right><C-Right><C-Right><Left><Left><Left>
 
 " By default, disable gutentags and remove all project root detection since it
 " doesn't play nicely with submodules
@@ -166,10 +156,9 @@ inoremap <C-Space> <C-x><C-o>
 inoremap <C-@> <C-x><C-o>
 
 " If a session is loaded and specifies g:prj_path, set up
-" grepper and gutentags accordingly
+" gutentags accordingly
 function SetupPrjPath()
-    if exists('g:prj_path')
-        let g:grepper.grep.grepprg = 'grep -EInr $* ' . g:prj_path
+    if g:prj_path != ''
         if len(g:gutentags_project_root) > 0
             if has('win32')
                 let g:gutentags_file_list_command = 'dir ' . g:prj_path . ' /-n /b /s /a-d'
