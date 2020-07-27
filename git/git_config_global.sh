@@ -26,7 +26,7 @@ git config --global alias.mt "mergetool"
 git config --global alias.rou "config remote.origin.url"
 git config --global alias.st "status"
 git config --global alias.su "submodule update"
-git config --global alias.nuke "!git reset --hard && git clean -dfx -e*.swp"
+git config --global alias.nuke "!git reset --hard && git submodule update --init --recursive && git clean -dfx -e*.swp"
 
 # For graphical diffs
 git config --global diff.tool meld
