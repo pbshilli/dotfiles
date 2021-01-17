@@ -108,7 +108,12 @@ vnoremap <leader>w <C-C>:update<CR>
 set listchars=tab:»·,trail:·,eol:$
 
 " grep
-set grepprg=grep\ -ErInH
+if has("win32")
+    set grepprg=wsl\ ag\ --nogroup\ --column
+else
+    set grepprg=ag\ --nogroup\ --column
+endif
+set grepformat=%f:%l:%c:%m
 
 let g:prj_path = ''
 nnoremap <leader>f :sil :gr! "\b<C-R>=expand("<cword>")<CR>\b" <C-R>=g:prj_path<CR> \| copen<C-B><C-Right><C-Right><C-Right><Left><Left><Left>
@@ -161,7 +166,7 @@ function SetupPrjPath()
     if g:prj_path != ''
         if len(g:gutentags_project_root) > 0
             if has('win32')
-                let g:gutentags_file_list_command = 'dir ' . g:prj_path . ' /-n /b /s /a-d'
+                let g:gutentags_file_list_command = 'wsl find ' . g:prj_path . ' -type f'
             else
                 let g:gutentags_file_list_command = 'find ' . g:prj_path . ' -type f'
             endif
