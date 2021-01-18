@@ -123,6 +123,11 @@ nnoremap <leader>f :sil :gr! "\b<C-R>=expand("<cword>")<CR>\b" <C-R>=g:prj_path<
 let g:gutentags_enabled = 0
 let g:gutentags_add_default_project_roots = 0
 let g:gutentags_add_ctrlp_root_markers = 0
+if has("win32")
+    let g:gutentags_ctags_executable = '~/prj/ctags/ctags'
+else
+    let g:gutentags_ctags_executable = '~/git/ctags/ctags'
+endif
 
 " Ctrl-P
 let g:ctrlp_map = '<leader>p'
