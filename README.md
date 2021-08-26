@@ -25,4 +25,5 @@ Create ~/\_vsvimrc with the following contents:
 
 ## tmux Installation
 
-In the home directory: `ln -s /path/to/tmux/.tmux.conf`
+In the home directory:
+`echo source-file /path/to/dotfiles/tmux/tmux.conf > .tmux.conf`
