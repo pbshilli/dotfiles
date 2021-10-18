@@ -109,7 +109,7 @@ set listchars=tab:»·,trail:·,eol:$
 
 " grep
 if has("win32")
-    set grepprg=wsl\ ag\ --nogroup\ --column
+    set grepprg=~/prj/ag/ag.exe\ --nogroup\ --column
 else
     set grepprg=ag\ --nogroup\ --column
 endif
