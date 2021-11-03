@@ -109,12 +109,15 @@ set listchars=tab:»·,trail:·,eol:$
 
 " grep
 set grepprg=ag\ --vimgrep
+
+" Ignore CRLFs
 if has("win32")
-    " Ignore CRLFs
-    set grepformat=%f:%l:%c:%m%*[\\r]
+    set grepformat=%f:%l:%c:%m%*[\\r],
 else
-    set grepformat=%f:%l:%c:%m
+    set grepformat=
 endif
+
+set grepformat+=%f:%l:%c:%m
 
 let g:prj_path = ''
 nnoremap <leader>f :sil :gr! "\b<C-R>=expand("<cword>")<CR>\b" <C-R>=g:prj_path<CR> \| copen<C-B><C-Right><C-Right><C-Right><Left><Left><Left>
