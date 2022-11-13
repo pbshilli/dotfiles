@@ -4,8 +4,15 @@ $NEOVIM_VERSION = '0.8.0'
 if (!(Test-Path Variable:PrjPath)) {
     $PrjPath = "$env:USERPROFILE\prj"
 }
+
+if (!(Test-Path Variable:DotfilesLocalName)) {
+    $DotfilesLocalName = 'pbshilli-dotfiles'
+}
+
 $AppPath = "$PrjPath\Neovim"
 $AppBinPath = "$AppPath\bin"
+
+$InitVimPath = "$env:LOCALAPPDATA\nvim\init.vim"
 
 # Remove old Neovim install
 Remove-Item -Path $AppPath -Recurse -Force -ErrorAction SilentlyContinue
@@ -15,9 +22,21 @@ Invoke-WebRequest "https://github.com/neovim/neovim/releases/download/v$NEOVIM_V
 Expand-Archive -Path  "$PrjPath\nvim-win64.zip" -DestinationPath $PrjPath
 Move-Item -Path  "$PrjPath\nvim-win64" -Destination $AppPath
 Remove-Item "$PrjPath\nvim-win64.zip"
+
+# Create a local init.vim if it doesn't exist
 New-Item -Path "$env:LOCALAPPDATA\nvim" -ItemType Directory -Force
+if (!(Test-Path $InitVimPath)) {
+    New-Item $InitVimPath -Force
+}
+
+# Connect the Git dotfiles profile to the local profile
+$GitProfileInLocal = Select-String -Path $InitVimPath -Pattern $DotfilesLocalName -SimpleMatch
+if ($GitProfileInLocal -eq $null) {
+    Add-Content -Path $InitVimPath -Value "source ~/git/$DotfilesLocalName/vim/init_nvim.vim" -Encoding ascii
+}
+
+# Set up Vim Plug
 New-Item -Path "$env:LOCALAPPDATA\nvim-data\site\autoload" -ItemType Directory -Force
-Write-Output 'source ~/git/pbshilli-dotfiles/vim/init_nvim.vim' | Out-File -encoding ascii "$env:LOCALAPPDATA\nvim\init.vim"
 Invoke-WebRequest 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' -OutFile "$env:LOCALAPPDATA\nvim-data\site\autoload\plug.vim"
 Invoke-Expression "$AppBinPath\nvim.exe -c PlugInstall -c qa"
 
