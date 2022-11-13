@@ -45,7 +45,7 @@ if (!(Test-Path $PROFILE)) {
 # Connect the Git dotfiles profile to the local profile
 $GitProfileInLocal = Select-String -Path $PROFILE -Pattern $DotfilesLocalName -SimpleMatch
 if ($GitProfileInLocal -eq $null) {
-    Write-Output ". $GitPath\$DotfilesLocalName\powershell\profile.ps1" >> $PROFILE
+    Add-Content -Path $PROFILE -Value ". $GitPath\$DotfilesLocalName\powershell\profile.ps1"
 }
 
 & "$GitPath\$DotfilesLocalName\setup\neovim-install.ps1"
