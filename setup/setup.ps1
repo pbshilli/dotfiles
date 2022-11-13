@@ -48,8 +48,8 @@ if ($GitProfileInLocal -eq $null) {
     Write-Output ". $GitPath\$DotfilesLocalName\powershell\profile.ps1" >> $PROFILE
 }
 
-& $PSScriptRoot\neovim-install.ps1
-& $PSScriptRoot\ag-install.ps1
+& "$GitPath\$DotfilesLocalName\setup\neovim-install.ps1"
+& "$GitPath\$DotfilesLocalName\setup\ag-install.ps1"
 
 # Set up the Python language server
 py -3 -m pip install --user python-language-server
