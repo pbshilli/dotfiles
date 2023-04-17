@@ -15,18 +15,15 @@ This repository is a self-contained package of all my dotfiles.
 1. Run `git/config-editor-nvim-qt.sh` if using graphical Linux/Windows
 1. Run `git/config-editor-nvim.sh` if using CLI Linux
 
-## Vim Installation
+## Neovim Installation
 
-1. [Install vim-plug](https://github.com/junegunn/vim-plug)
-1. Create ~/.vimrc or ~/\_vimrc depending on the OS
+Windows: Run `setup/neovim-install.ps1`
+
+Linux:
+
+1. Run `setup/neovim-install.sh`
 1. Add the following to whatever vimrc or init.vim file:
-    * `source /path/to/init.vim`
-1. Open Vim, run `:PlugInstall` and restart
-
-## VsVim Installation
-
-Create ~/\_vsvimrc with the following contents:
-`source /path/to/init_vs.vim`
+    * `source /absolute/path/to/pbshilli-dotfiles/vim/init_nvim.vim`
 
 ## tmux Installation
 
