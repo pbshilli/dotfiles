@@ -1,10 +1,12 @@
-NEOVIM_VERSION = '0.9.0'
-NEOVIM_URL = "https://github.com/neovim/neovim/releases/$NEOVIM_VERSION/download/nvim.appimage"
+NEOVIM_VERSION='0.9.0'
+NEOVIM_URL="https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/nvim.appimage"
 
 # Download Neovim AppImage
 mkdir -p ~/Applications
-curl -L $NEOVIM_URL -o ~/Applications/nvim.appimage
-chmod u+x ~/Applications/nvim.appimage
+pushd ~/Applications
+curl -LO $NEOVIM_URL
+chmod u+x nvim.appimage
+popd
 
 # Install to CLI
 mkdir -p ~/.local/bin
