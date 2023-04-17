@@ -1,4 +1,4 @@
-$NEOVIM_VERSION = '0.8.0'
+$NEOVIM_VERSION = '0.9.0'
 
 # Use default prj path if not defined
 if (!(Test-Path Variable:PrjPath)) {
@@ -35,10 +35,32 @@ if ($GitProfileInLocal -eq $null) {
     Add-Content -Path $InitVimPath -Value "source ~/git/$DotfilesLocalName/vim/init_nvim.vim" -Encoding ascii
 }
 
-# Set up Vim Plug
-New-Item -Path "$env:LOCALAPPDATA\nvim-data\site\autoload" -ItemType Directory -Force
-Invoke-WebRequest 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' -OutFile "$env:LOCALAPPDATA\nvim-data\site\autoload\plug.vim"
-Invoke-Expression "$AppBinPath\nvim.exe -c PlugInstall -c qa"
+# Download/install Neovim packages
+# NOTE: pbshilli-dotfiles/start will autoload on Neovim start
+#       pbshilli-dotfiles/opt will only load with :packadd
+New-Item -Path "$env:LOCALAPPDATA\nvim-data\site\pack\pbshilli-dotfiles\start" -ItemType Directory -Force
+Push-Location -Path "$env:LOCALAPPDATA\nvim-data\site\pack\pbshilli-dotfiles\start"
+
+# Fuzzy file search
+git clone https://github.com/kien/ctrlp.vim.git
+
+# Color scheme
+git clone https://github.com/romainl/Apprentice.git
+
+# File explorer
+git clone https://github.com/tpope/vim-vinegar.git
+git clone https://github.com/tpope/vim-dispatch.git
+
+# CTAGS utility
+git clone https://github.com/ludovicchabant/vim-gutentags.git
+
+# Syntax highlighting
+git clone https://github.com/kergoth/vim-bitbake.git
+
+# Secure modelines
+git clone https://github.com/ciaranm/securemodelines.git
+
+Pop-Location
 
 # Add Neovim to the user-level env:PATH (if not already added)
 $EnvUserPath = $(Get-ItemProperty -Path HKCU:\Environment -Name Path).path

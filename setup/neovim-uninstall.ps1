@@ -13,6 +13,9 @@ Remove-Item -LiteralPath "HKCU:\Software\Classes\*\shell\Edit with Neovim" -Recu
 Remove-Item -Path "HKCU:\Software\Classes\Directory\shell\Open Neovim Here" -Recurse -Force -ErrorAction Continue
 Remove-Item -Path "HKCU:\Software\Classes\Directory\Background\shell\Open Neovim Here" -Recurse -Force -ErrorAction Continue
 
+# Remove Neovim packages
+Remove-Item -Path "$env:LOCALAPPDATA\nvim-data\site\pack\pbshilli-dotfiles" -Recurse -Force -ErrorAction Continue
+
 # Remove Neovim from the user-level env:PATH (if not already added)
 $EnvUserPath = $(Get-ItemProperty -Path HKCU:\Environment -Name Path).path
 $EnvUserPath = $EnvUserPath.replace(";$AppBinPath","")
