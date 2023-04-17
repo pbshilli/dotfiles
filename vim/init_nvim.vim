@@ -162,7 +162,7 @@ lua << EOF
         callback = function()
             client_id = vim.lsp.start({
                 name = 'pyls',
-                cmd = {'python3', '-m', 'pyls'},
+                cmd = pyls_cmd,
                 root_dir = vim.fn.getcwd(),
                 })
             vim.lsp.buf_attach_client(0, client_id)
