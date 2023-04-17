@@ -4,20 +4,8 @@ set nomodeline
 " Load plugins
 if has("win32")
     call plug#begin("~/AppData/Local/nvim/plugged")
-    
-    " Language server
-    Plug 'autozimu/LanguageClient-neovim', {
-        \ 'branch': 'next',
-        \ 'do': 'powershell -File install.ps1',
-        \ }
 else
     call plug#begin("~/.config/nvim/plugged")
-
-    " Language server
-    Plug 'autozimu/LanguageClient-neovim', {
-        \ 'branch': 'next',
-        \ 'do': 'bash install.sh',
-        \ }
 endif
 
 " Fuzzy file search
@@ -142,28 +130,39 @@ let g:ctrlp_working_path_mode = '0'
 " Don't limit Ctrl-P files
 let g:ctrlp_max_files = 0
 
-" Language Server
-if has("win32")
-    let g:LanguageClient_serverCommands = {
-        \ 'python': ['py', '-3', '-m', 'pyls'],
-        \ }
-else
-    let g:LanguageClient_serverCommands = {
-        \ 'python': ['python3', '-m', 'pyls'],
-        \ }
-endif
+lua << EOF
+    local is_windows = vim.loop.os_uname().version:match 'Windows'
 
-" Turn off live syntax warning/error reporting
-let g:LanguageClient_diagnosticsEnable = 0
+    -- Set up general LSP client settings
+    vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(ev)
+            local opts = { buffer = ev.buf }
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+            end,
+        })
 
-" Enable the language client for all supported filetypes
-function LC_maps()
-    if has_key(g:LanguageClient_serverCommands, &filetype)
-        nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
-        nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-    endif
-endfunction
-autocmd FileType * call LC_maps()
+    -- Resolve pyls command
+    if is_windows then
+        pyls_cmd = {'py', '-3', '-m', 'pyls'}
+    else
+        pyls_cmd = {'python3', '-m', 'pyls'}
+    end
+
+    -- Always set up pyls for Python files
+    vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'python',
+        callback = function()
+            client_id = vim.lsp.start({
+                name = 'pyls',
+                cmd = pyls_cmd,
+                root_dir = vim.fn.getcwd(),
+                })
+            vim.lsp.buf_attach_client(0, client_id)
+            end,
+        })
+EOF
 
 " Remap some things for omnicomplete goodness
 inoremap <C-Space> <C-x><C-o>
