@@ -102,20 +102,10 @@ let g:ctrlp_working_path_mode = '0'
 " Don't limit Ctrl-P files
 let g:ctrlp_max_files = 0
 
-" Language Server
-if has("win32")
-    let g:LanguageClient_serverCommands = {
-        \ 'python': ['py', '-3', '-m', 'pyls'],
-        \ }
-else
-    let g:LanguageClient_serverCommands = {
-        \ 'python': ['python3', '-m', 'pyls'],
-        \ }
-endif
-
 lua << EOF
     local is_windows = vim.loop.os_uname().version:match 'Windows'
 
+    -- Set up general LSP client settings
     vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(ev)
             local opts = { buffer = ev.buf }
@@ -125,12 +115,14 @@ lua << EOF
             end,
         })
 
+    -- Resolve pyls command
     if is_windows then
         pyls_cmd = {'py', '-3', '-m', 'pyls'}
     else
         pyls_cmd = {'python3', '-m', 'pyls'}
     end
 
+    -- Always set up pyls for Python files
     vim.api.nvim_create_autocmd('FileType', {
         pattern = 'python',
         callback = function()
