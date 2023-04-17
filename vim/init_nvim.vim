@@ -4,30 +4,28 @@ set nomodeline
 " Load plugins
 if has("win32")
     call plug#begin("~/AppData/Local/nvim/plugged")
-else
-    call plug#begin("~/.config/nvim/plugged")
+
+    " Fuzzy file search
+    Plug 'kien/ctrlp.vim'
+
+    " Color schemes
+    Plug 'romainl/Apprentice'
+
+    " File explorer
+    Plug 'tpope/vim-vinegar'
+    Plug 'tpope/vim-dispatch'
+
+    " CTAGS utility
+    Plug 'ludovicchabant/vim-gutentags'
+
+    " Syntax highlighting
+    Plug 'kergoth/vim-bitbake'
+
+    " Secure modelines
+    Plug 'ciaranm/securemodelines'
+
+    call plug#end()
 endif
-
-" Fuzzy file search
-Plug 'kien/ctrlp.vim'
-
-" Color schemes
-Plug 'romainl/Apprentice'
-
-" File explorer
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-dispatch'
-
-" CTAGS utility
-Plug 'ludovicchabant/vim-gutentags'
-
-" Syntax highlighting
-Plug 'kergoth/vim-bitbake'
-
-" Secure modelines
-Plug 'ciaranm/securemodelines'
-
-call plug#end()
 
 colorscheme apprentice
 
