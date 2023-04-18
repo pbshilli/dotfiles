@@ -25,3 +25,16 @@ Function Git-Typo-Fixer {
 }
 Del alias:gi -Force
 Set-Alias -Name gi -value Git-Typo-Fixer
+
+Function Get-UnidentifiedNetworkCategory {
+    Get-NetConnectionProfile | Where-Object -Property Name -eq "Unidentified Network" | Select-Object InterfaceAlias, NetworkCategory
+}
+Set-Alias -Name gunc -Value Get-UnidentifiedNetworkCategory
+
+Function Set-UnidentifiedNetworkCategory {
+    Param([String[]]$NetworkCategory="Private")
+    $InterfaceAlias = $(Get-UnidentifiedNetworkCategory | Select-Object -Last 1).InterfaceAlias
+    Set-NetConnectionProfile -InterfaceAlias $InterfaceAlias -NetworkCategory $NetworkCategory
+    Get-UnidentifiedNetworkCategory
+}
+Set-Alias -Name sunc -Value Set-UnidentifiedNetworkCategory
