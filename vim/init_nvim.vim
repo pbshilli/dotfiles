@@ -117,9 +117,9 @@ lua << EOF
 
     -- Resolve pyls command
     if is_windows then
-        pyls_cmd = {'py', '-3', '-m', 'pyls'}
+        pylsp_cmd = {'py', '-3-64', '-m', 'pylsp'}
     else
-        pyls_cmd = {'python3', '-m', 'pyls'}
+        pylsp_cmd = {'python3', '-m', 'pylsp'}
     end
 
     -- Always set up pyls for Python files
@@ -127,8 +127,8 @@ lua << EOF
         pattern = 'python',
         callback = function()
             client_id = vim.lsp.start({
-                name = 'pyls',
-                cmd = pyls_cmd,
+                name = 'pylsp',
+                cmd = pylsp_cmd,
                 root_dir = vim.fn.getcwd(),
                 })
             vim.lsp.buf_attach_client(0, client_id)

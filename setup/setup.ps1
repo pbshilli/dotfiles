@@ -52,4 +52,4 @@ if ($GitProfileInLocal -eq $null) {
 & "$GitPath\$DotfilesLocalName\setup\ag-install.ps1"
 
 # Set up the Python language server
-py -3 -m pip install --user python-language-server
+py -3-64 -m pip install --user python-lsp-server
