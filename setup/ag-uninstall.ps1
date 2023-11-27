@@ -10,7 +10,10 @@ $ErrorActionPreference = "Stop"
 # Clean up ag path
 Remove-Item -Path "$AppPath" -Recurse -Force -ErrorAction Continue
 
-# Remove ag from the user-level env:PATH (if not already added)
-$EnvUserPath = $(Get-ItemProperty -Path HKCU:\Environment -Name Path).path
-$EnvUserPath = $EnvUserPath.replace(";$AppPath","")
-Set-ItemProperty -Path HKCU:\Environment -Name Path -Value $EnvUserPath
+# Remove ag from the user-level env:PATH (if not already removed)
+$EnvUserPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if ($EnvUserPath.Contains(";$AppPath")) {
+    $EnvUserPath = $EnvUserPath.replace(";$AppPath","")
+    [Environment]::SetEnvironmentVariable("Path", $EnvUserPath, "User")
+    $env:Path = $env:Path.replace(";$AppPath","")
+}

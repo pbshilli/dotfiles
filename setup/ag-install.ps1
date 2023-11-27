@@ -9,9 +9,10 @@ New-Item -Path $PrjPath -ItemType Directory -Force
 New-Item -Path "$AppPath" -ItemType Directory -Force
 
 # Add ag to the user-level env:PATH (if not already added)
-$EnvUserPath = $(Get-ItemProperty -Path HKCU:\Environment -Name Path).path
+$EnvUserPath = [Environment]::GetEnvironmentVariable("Path", "User")
 if (!($EnvUserPath.Contains($AppPath))) {
-    Set-ItemProperty -Path HKCU:\Environment -Name Path -Value "$EnvUserPath;$AppPath"
+    [Environment]::SetEnvironmentVariable("Path", "$EnvUserPath;$AppPath", "User")
+    $env:Path = "$env:Path;$AppPath"
 }
 
 # Open up a web browser to get the latest ag release

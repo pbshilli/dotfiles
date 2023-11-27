@@ -16,10 +16,13 @@ Remove-Item -Path "HKCU:\Software\Classes\Directory\Background\shell\Open Neovim
 # Remove Neovim packages
 Remove-Item -Path "$env:LOCALAPPDATA\nvim-data\site\pack\pbshilli-dotfiles" -Recurse -Force -ErrorAction Continue
 
-# Remove Neovim from the user-level env:PATH (if not already added)
-$EnvUserPath = $(Get-ItemProperty -Path HKCU:\Environment -Name Path).path
-$EnvUserPath = $EnvUserPath.replace(";$AppBinPath","")
-Set-ItemProperty -Path HKCU:\Environment -Name Path -Value $EnvUserPath
+# Remove Neovim from the user-level env:PATH (if not already removed)
+$EnvUserPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if ($EnvUserPath.Contains(";$AppBinPath")) {
+    $EnvUserPath = $EnvUserPath.replace(";$AppBinPath","")
+    [Environment]::SetEnvironmentVariable("Path", $EnvUserPath, "User")
+    $env:Path = $env:Path.replace(";$AppBinPath","")
+}
 
 # Clean up Neovim path
 Remove-Item -Path "$AppPath" -Recurse -Force -ErrorAction Continue

@@ -63,9 +63,10 @@ git clone https://github.com/ciaranm/securemodelines.git
 Pop-Location
 
 # Add Neovim to the user-level env:PATH (if not already added)
-$EnvUserPath = $(Get-ItemProperty -Path HKCU:\Environment -Name Path).path
+$EnvUserPath = [Environment]::GetEnvironmentVariable("Path", "User")
 if (!($EnvUserPath.Contains($AppBinPath))) {
-    Set-ItemProperty -Path HKCU:\Environment -Name Path -Value "$EnvUserPath;$AppBinPath"
+    [Environment]::SetEnvironmentVariable("Path", "$EnvUserPath;$AppBinPath", "User")
+    $env:Path = "$env:Path;$AppBinPath"
 }
 
 # Set up Neovim context menu to point to this install
