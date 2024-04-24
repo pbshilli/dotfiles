@@ -25,6 +25,9 @@ if (!(Test-Path Variable:DotfilesURL)) {
 # Allow Unicode characters to be entered by ALT+<hex value> via the numpad
 New-ItemProperty -Path 'HKCU:\Control Panel\Input Method\' -Name EnableHexNumpad -Value 1 -PropertyType String -Force
 
+# Disable Bing when performing a Windows search
+New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Search -Name BingSearchEnabled -Value 0 -PropertyType DWord -Force
+
 # Add/update dotfiles
 New-Item -Path $GitPath -ItemType Directory -Force
 Push-Location -Path $GitPath
