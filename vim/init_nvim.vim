@@ -146,7 +146,7 @@ function SetupPrjPath()
     if g:prj_path != ''
         if len(g:gutentags_project_root) > 0
             if has('win32')
-                let g:gutentags_file_list_command = 'wsl find ' . g:prj_path . ' -type f'
+                let g:gutentags_file_list_command = '\"C:\\Program Files\\Git\\usr\\bin\\find.exe\" ' . g:prj_path . ' -type f'
             else
                 let g:gutentags_file_list_command = 'find ' . g:prj_path . ' -type f'
             endif
