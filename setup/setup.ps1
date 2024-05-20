@@ -1,26 +1,15 @@
 # Assumes git setup is completed
 # Assumes Python 3 is installed with pip
-
-# Use default prj path if not defined
-if (!(Test-Path Variable:PrjPath)) {
-    $PrjPath = "$env:USERPROFILE\prj"
-}
-# Use default git path if not defined
-if (!(Test-Path Variable:GitPath)) {
-    $GitPath = "$env:USERPROFILE\git"
-}
-
-if (!(Test-Path Variable:DotfilesLocalName)) {
-    $DotfilesLocalName = 'pbshilli-dotfiles'
-}
-
-if (!(Test-Path Variable:DotfilesURL)) {
+param(
+    [String]$PrjPath="$env:USERPROFILE\prj",
+    [String]$GitPath="$env:USERPROFILE\git",
+    [String]$DotfilesLocalName='pbshilli-dotfiles',
     # SSH version: Allows R/W access, but requires setting up SSH key in GitHub
     # $DotfilesURL = 'git@github.com:pbshilli/dotfiles.git'
-
     # HTTPS version: Read-only, but works out of the box
-    $DotfilesURL = 'https://github.com/pbshilli/dotfiles.git'
-}
+    [String]$DotfilesURL='https://github.com/pbshilli/dotfiles.git',
+    [String]$NeovimVersion='0.9.0'
+)
 
 # Allow Unicode characters to be entered by ALT+<hex value> via the numpad
 New-ItemProperty -Path 'HKCU:\Control Panel\Input Method\' -Name EnableHexNumpad -Value 1 -PropertyType String -Force
@@ -51,8 +40,12 @@ if ($GitProfileInLocal -eq $null) {
     Add-Content -Path $PROFILE -Value ". $GitPath\$DotfilesLocalName\powershell\profile.ps1"
 }
 
-& "$GitPath\$DotfilesLocalName\setup\neovim-install.ps1"
-& "$GitPath\$DotfilesLocalName\setup\ag-install.ps1"
+& $GitPath\$DotfilesLocalName\setup\neovim-install.ps1 `
+    -PrjPath $PrjPath `
+    -DotfilesLocalName $DotfilesLocalName `
+    -NeovimVersion $NeovimVersion
+& $GitPath\$DotfilesLocalName\setup\ag-install.ps1 `
+    -PrjPath $PrjPath
 
 # Set up the Python language server
 py -3-64 -m pip install --user python-lsp-server

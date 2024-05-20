@@ -1,15 +1,8 @@
-# Use default prj path if not defined
-if (!(Test-Path Variable:PrjPath)) {
-    $PrjPath = "$env:USERPROFILE\prj"
-}
-# Use default git path if not defined
-if (!(Test-Path Variable:GitPath)) {
-    $GitPath = "$env:USERPROFILE\git"
-}
-
-if (!(Test-Path Variable:DotfilesLocalName)) {
-    $DotfilesLocalName = 'pbshilli-dotfiles'
-}
+param(
+    [String]$PrjPath="$env:USERPROFILE\prj",
+    [String]$GitPath="$env:USERPROFILE\git",
+    [String]$DotfilesLocalName='pbshilli-dotfiles'
+)
 
 # If anything goes wrong, don't continue
 $ErrorActionPreference = "Stop"
@@ -30,8 +23,8 @@ if (Test-Path "$GitPath\$DotfilesLocalName") {
 # Clean up the Python language server
 py -3 -m pip uninstall python-language-server -y
 
-& $PSScriptRoot\ag-uninstall.ps1
-& $PSScriptRoot\neovim-uninstall.ps1
+& $PSScriptRoot\ag-uninstall.ps1 -PrjPath $PrjPath
+& $PSScriptRoot\neovim-uninstall.ps1 -PrjPath $PrjPath
 
 # Disconnect the Git dotfiles profile from the local profile
 Get-Content $PROFILE | Where-Object {$_ -notlike ". $GitPath\$DotfilesLocalName\powershell\profile.ps1"} | Out-File $PROFILE

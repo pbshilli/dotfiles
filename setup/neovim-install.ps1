@@ -1,13 +1,8 @@
-$NEOVIM_VERSION = '0.9.0'
-
-# Use default prj path if not defined
-if (!(Test-Path Variable:PrjPath)) {
-    $PrjPath = "$env:USERPROFILE\prj"
-}
-
-if (!(Test-Path Variable:DotfilesLocalName)) {
-    $DotfilesLocalName = 'pbshilli-dotfiles'
-}
+param(
+    [String]$PrjPath="$env:USERPROFILE\prj",
+    [String]$DotfilesLocalName='pbshilli-dotfiles',
+    [String]$NeovimVersion='0.9.0'
+)
 
 $AppPath = "$PrjPath\Neovim"
 $AppBinPath = "$AppPath\bin"
@@ -18,7 +13,8 @@ $InitVimPath = "$env:LOCALAPPDATA\nvim\init.vim"
 Remove-Item -Path $AppPath -Recurse -Force -ErrorAction SilentlyContinue
 
 # Set up Neovim
-Invoke-WebRequest "https://github.com/neovim/neovim/releases/download/v$NEOVIM_VERSION/nvim-win64.zip" -OutFile "$PrjPath\nvim-win64.zip"
+New-Item -Path $PrjPath -ItemType Directory -Force
+Invoke-WebRequest "https://github.com/neovim/neovim/releases/download/v$NeovimVersion/nvim-win64.zip" -OutFile "$PrjPath\nvim-win64.zip"
 Expand-Archive -Path  "$PrjPath\nvim-win64.zip" -DestinationPath $PrjPath
 Move-Item -Path  "$PrjPath\nvim-win64" -Destination $AppPath
 Remove-Item "$PrjPath\nvim-win64.zip"

@@ -1,7 +1,7 @@
-# Use default prj path if not defined
-if (!(Test-Path Variable:PrjPath)) {
-    $PrjPath = "$env:USERPROFILE\prj"
-}
+param(
+    [String]$PrjPath="$env:USERPROFILE\prj"
+)
+
 $AppPath = "$PrjPath\Neovim"
 $AppBinPath = "$AppPath\bin"
 
