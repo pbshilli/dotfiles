@@ -29,3 +29,8 @@ Linux:
 
 In the home directory:
 `echo source-file /path/to/dotfiles/tmux/tmux.conf > .tmux.conf`
+
+## bash Setup
+
+Copy relevant items from /path/to/dotfiles/bash files to ~/.profile and/or ~/.bash\_aliases
+
