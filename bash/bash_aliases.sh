@@ -3,6 +3,7 @@ export EDITOR=nvim
 
 alias :q='exit'
 
+alias nivm=nvim
 alias vi=nvim
 alias vim=nvim
 alias vims='vim -S'
