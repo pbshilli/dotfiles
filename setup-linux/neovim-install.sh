@@ -39,3 +39,6 @@ git clone https://github.com/ciaranm/securemodelines.git
 
 popd
 
+# Set up the Python language server
+sudo apt install python3-pylsp
+

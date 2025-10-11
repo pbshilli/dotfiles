@@ -119,7 +119,7 @@ lua << EOF
     if is_windows then
         pylsp_cmd = {'py', '-3-64', '-m', 'pylsp'}
     else
-        pylsp_cmd = {'python3', '-m', 'pylsp'}
+        pylsp_cmd = {'pylsp'}
     end
 
     -- Always set up pyls for Python files
