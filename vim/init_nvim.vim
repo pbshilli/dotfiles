@@ -68,7 +68,9 @@ vnoremap <leader>w <C-C>:update<CR>
 set listchars=tab:»·,trail:·,eol:$
 
 " grep
-set grepprg=ag\ --vimgrep
+" NOTE: Don't use --vimgrep due to the following issue:
+"       https://github.com/ggreer/the_silver_searcher/issues/1022
+set grepprg=ag\ --nogroup\ --column
 
 " Ignore CRLFs
 if has("win32")
