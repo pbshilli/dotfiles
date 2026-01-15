@@ -136,6 +136,13 @@ lua << EOF
             vim.lsp.buf_attach_client(0, client_id)
             end,
         })
+
+    -- When opening a file with nvim-qt from the Windows 11 context menu,
+    -- Windows brilliantly sets the working directory to system32.
+    -- When this happens, fix it to use the current file's path.
+    if is_windows and (vim.fn.getcwd() == "C:\\WINDOWS\\system32") then
+        vim.cmd("cd %:p:h")
+    end
 EOF
 
 " Remap some things for omnicomplete goodness
