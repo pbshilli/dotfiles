@@ -7,6 +7,7 @@ alias nivm=nvim
 alias vi=nvim
 alias vim=nvim
 alias vims='vim -S'
+alias uvim='uv run --with python-lsp-server nvim'
 
 # GNOME Keyring command line utilities
 . ~/git/pbshilli-dotfiles/bash/gnome-keyring.sh
